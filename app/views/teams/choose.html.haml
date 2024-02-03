@@ -1,0 +1,6 @@
+%h1 Team selection
+
+= form_tag(teams_update_current_team_path, method: :post) do
+  %label{for: "team_id"} Select the team:
+  = select_tag "team_id", options_from_collection_for_select(@teams, "id", "name")
+  = submit_tag "Select"
