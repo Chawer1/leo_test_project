@@ -1,0 +1,22 @@
+services:
+  leo_test_project:
+    image: ruby:3.2.2
+    container_name: leo_test_project_container
+    volumes:
+      - .:/leo_test_project
+    working_dir: /leo_test_project
+    command: bash -c "bundle install --redownload && bundle exec rails server -b 0.0.0.0" 
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres@db:5432/leo_test_project_development
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    container_name: leo_test_project_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=leo_test_project_development
+      - POSTGRES_HOST_AUTH_METHOD=trust

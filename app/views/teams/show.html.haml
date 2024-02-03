@@ -1,0 +1,5 @@
+%h1= @team.name
+
+- if current_user.role == "owner"
+  = link_to "Edit", edit_team_path(@team)
+  = link_to "Delete", team_path(@team), method: :delete, data: { confirm: "Are you sure?" }
