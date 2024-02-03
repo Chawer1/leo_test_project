@@ -1,0 +1,18 @@
+- if current_user.profile
+  = link_to 'View Profile', profile_path(current_user.profile)
+- else
+  = link_to 'Create Profile', new_profile_path
+
+%h1 Your Teams
+
+- if @role == "admin"
+  = link_to "Create New Team", new_team_path
+
+%ul
+  - @teams.each do |team|
+    - if team.user_has_role?(current_user, 'owner') || team.user_has_role?(current_user, 'member')
+      %li
+        = link_to team.name, team_path(team)
+        - if team.user_has_role?(current_user, 'owner')
+          = link_to "Edit", edit_team_path(team)
+          = link_to "Delete", team_path(team), method: :delete, data: { confirm: "Are you sure?" }
